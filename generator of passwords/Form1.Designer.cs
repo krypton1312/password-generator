@@ -140,7 +140,7 @@ namespace generator_of_passwords
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(305, 100);
+            label1.Location = new System.Drawing.Point(281, 100);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(155, 15);
             label1.TabIndex = 9;
@@ -149,7 +149,7 @@ namespace generator_of_passwords
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(305, 152);
+            label2.Location = new System.Drawing.Point(282, 153);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(166, 15);
             label2.TabIndex = 12;
@@ -157,7 +157,7 @@ namespace generator_of_passwords
             // 
             // textBox1
             // 
-            textBox1.Location = new System.Drawing.Point(306, 227);
+            textBox1.Location = new System.Drawing.Point(282, 227);
             textBox1.Name = "textBox1";
             textBox1.Size = new System.Drawing.Size(166, 23);
             textBox1.TabIndex = 15;
@@ -191,7 +191,7 @@ namespace generator_of_passwords
             groupBox2.Controls.Add(radioButton4);
             groupBox2.Controls.Add(radioButton3);
             groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            groupBox2.Location = new System.Drawing.Point(305, 170);
+            groupBox2.Location = new System.Drawing.Point(282, 171);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new System.Drawing.Size(131, 55);
             groupBox2.TabIndex = 17;
@@ -225,7 +225,7 @@ namespace generator_of_passwords
             groupBox1.Controls.Add(radioButton2);
             groupBox1.Controls.Add(radioButton1);
             groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            groupBox1.Location = new System.Drawing.Point(305, 118);
+            groupBox1.Location = new System.Drawing.Point(282, 118);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new System.Drawing.Size(128, 35);
             groupBox1.TabIndex = 16;

@@ -264,7 +264,8 @@ namespace generator_of_passwords
         {
             textBox1.Visible = true;
             if (radioButton4.Checked)
-            {   if (!string.IsNullOrEmpty(FinalPassword))
+            {
+                if (!string.IsNullOrEmpty(FinalPassword))
                 {
 
 
@@ -298,7 +299,7 @@ namespace generator_of_passwords
                     }
                 }
             }
-           
+
         }
     }
 }
