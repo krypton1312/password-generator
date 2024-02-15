@@ -181,48 +181,10 @@ namespace generator_of_passwords
                 label2.Visible = true;
                 radioButton3.Visible = true;
                 radioButton4.Visible = true;
-                if (radioButton3.Checked)
-                {
-                    string filePath = @"D:\Учеба\КРОК\4 курс\качество и тест пз\generator of passwords\generator of passwords\passwords.txt";
-
-                    if (File.Exists(filePath))
-                    {
-                        File.WriteAllText(filePath, FinalPassword + "\n");
-                    }
-                    else
-                    {
-                        try
-                        {
-                            File.CreateText(filePath);
-                            Debug.WriteLine("Файл успешно создан.");
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine($"Ошибка при создании файла: {ex.Message}");
-                        }
-                    }
-                }
-                else if (radioButton4.Checked)
-                {
-                    textBox1.Visible = true;
-                    if (File.Exists(textBox1.Text))
-                    {
-                        File.WriteAllText(textBox1.Text, FinalPassword + "\n");
-                    }
-                    else
-                    {
-                        try
-                        {
-                            File.CreateText(textBox1.Text);
-                            Debug.WriteLine("Файл успешно создан.");
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine($"Ошибка при создании файла: {ex.Message}");
-                        }
-                    }
-                }
             }
+            radioButton1_CheckedChanged(sender, e);
+            radioButton3_CheckedChanged(sender, e);
+            radioButton4_CheckedChanged(sender, e);
             outTextBox.Text = FinalPassword;
 
             ItemList.Clear();
@@ -249,13 +211,22 @@ namespace generator_of_passwords
                 radioButton4.Visible = true;
                 groupBox2.Visible = true;
             }
+            else if (radioButton2.Checked)
+            {
+                label2.Visible = false;
+                radioButton3.Visible = false;
+                radioButton4.Visible = false;
+                groupBox2.Visible = false;
+            }
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
+            textBox1.Visible = false;
             if (radioButton3.Checked)
             {
-                string filePath = @"D:\Учеба\КРОК\4 курс\качество и тест пз\generator of passwords\generator of passwords\passwords.txt";
+                string fileName = "passwords.txt";
+                string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
                 if (!string.IsNullOrEmpty(FinalPassword))
                 {
                     if (File.Exists(filePath))
@@ -291,6 +262,7 @@ namespace generator_of_passwords
 
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
+            textBox1.Visible = true;
             if (radioButton4.Checked)
             {   if (!string.IsNullOrEmpty(FinalPassword))
                 {
@@ -326,6 +298,7 @@ namespace generator_of_passwords
                     }
                 }
             }
+           
         }
     }
 }
