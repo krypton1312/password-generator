@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,11 +15,19 @@ namespace generator_of_passwords
 {
     public partial class Form1 : Form
     {
+        private string FinalPassword;
         public Form1()
         {
             InitializeComponent();
             LangComboBox.SelectedIndex = 0;
             LangComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            radioButton2.Checked = true;
+            label2.Visible = false;
+            radioButton3.Visible = false;
+            radioButton4.Visible = false;
+            textBox1.Visible = false;
+            groupBox2.Visible = false;
+            generateBut.Click += generateBut_Click;
         }
         private void LangComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -33,6 +42,11 @@ namespace generator_of_passwords
                         TextBigBox.Text = "Заглавные буквы";
                         SpecialSymbolsBox.Text = "Специальные символы";
                         generateBut.Text = "Сгенерировать пароль";
+                        label1.Text = "Сохранять пароли в файл?";
+                        radioButton1.Text = "Да";
+                        radioButton2.Text = "Нет";
+                        radioButton3.Text = "Дефолт файл";
+                        radioButton4.Text = "Свой путь:";
                         break;
                     }
                 case 2:
@@ -43,6 +57,12 @@ namespace generator_of_passwords
                         TextBigBox.Text = "Великі літери";
                         SpecialSymbolsBox.Text = "Спеціальні символи";
                         generateBut.Text = "Згенерувати пароль";
+                        label1.Text = "Зберігати паролі у файл?";
+                        radioButton1.Text = "Так";
+                        radioButton2.Text = "Ні";
+                        radioButton3.Text = "Файл за замовчуванням";
+                        radioButton4.Text = "Власний шлях:";
+
                         break;
                     }
                 case 3:
@@ -53,6 +73,12 @@ namespace generator_of_passwords
                         TextBigBox.Text = "Uppercase Letters";
                         SpecialSymbolsBox.Text = "Special Symbols";
                         generateBut.Text = "Generate Password";
+                        label1.Text = "Save passwords to a file?";
+                        radioButton1.Text = "Yes";
+                        radioButton2.Text = "No";
+                        radioButton3.Text = "Default file";
+                        radioButton4.Text = "Custom path:";
+
                         break;
                     }
                 case 4:
@@ -63,6 +89,12 @@ namespace generator_of_passwords
                         TextBigBox.Text = "Letras mayusculas";
                         SpecialSymbolsBox.Text = "Simbolos especiales";
                         generateBut.Text = "Generar contraseña";
+                        label1.Text = "¿Guardar contraseñas en un archivo?";
+                        radioButton1.Text = "Sí";
+                        radioButton2.Text = "No";
+                        radioButton3.Text = "Archivo predeterminado";
+                        radioButton4.Text = "Ruta personalizada:";
+
                         break;
                     }
             }
@@ -143,11 +175,55 @@ namespace generator_of_passwords
                 catch { }
                 Debug.Write(password[i] + " ");
             }
-            string FinalPassword = ConvertAsciiCodesToString(password);
+            FinalPassword = ConvertAsciiCodesToString(password);
+            if (radioButton1.Checked)
+            {
+                label2.Visible = true;
+                radioButton3.Visible = true;
+                radioButton4.Visible = true;
+                if (radioButton3.Checked)
+                {
+                    string filePath = @"D:\Учеба\КРОК\4 курс\качество и тест пз\generator of passwords\generator of passwords\passwords.txt";
+
+                    if (File.Exists(filePath))
+                    {
+                        File.WriteAllText(filePath, FinalPassword + "\n");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            File.CreateText(filePath);
+                            Debug.WriteLine("Файл успешно создан.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"Ошибка при создании файла: {ex.Message}");
+                        }
+                    }
+                }
+                else if (radioButton4.Checked)
+                {
+                    textBox1.Visible = true;
+                    if (File.Exists(textBox1.Text))
+                    {
+                        File.WriteAllText(textBox1.Text, FinalPassword + "\n");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            File.CreateText(textBox1.Text);
+                            Debug.WriteLine("Файл успешно создан.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"Ошибка при создании файла: {ex.Message}");
+                        }
+                    }
+                }
+            }
             outTextBox.Text = FinalPassword;
-
-
-
 
             ItemList.Clear();
         }
@@ -162,6 +238,94 @@ namespace generator_of_passwords
             }
 
             return resultStringBuilder.ToString();
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                label2.Visible = true;
+                radioButton3.Visible = true;
+                radioButton4.Visible = true;
+                groupBox2.Visible = true;
+            }
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton3.Checked)
+            {
+                string filePath = @"D:\Учеба\КРОК\4 курс\качество и тест пз\generator of passwords\generator of passwords\passwords.txt";
+                if (!string.IsNullOrEmpty(FinalPassword))
+                {
+                    if (File.Exists(filePath))
+                    {
+                        try
+                        {
+                            using (StreamWriter sw = File.AppendText(filePath))
+                            {
+                                sw.WriteLine(FinalPassword);
+                                Debug.WriteLine("Пароль успешно добавлен в файл.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"Ошибка при добавлении пароля в файл: {ex.Message}");
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            File.CreateText(filePath);
+                            Debug.WriteLine("Файл успешно создан.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"Ошибка при создании файла: {ex.Message}");
+                        }
+                    }
+                }
+            }
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton4.Checked)
+            {   if (!string.IsNullOrEmpty(FinalPassword))
+                {
+
+
+                    textBox1.Visible = true;
+                    if (File.Exists(textBox1.Text))
+                    {
+                        try
+                        {
+                            using (StreamWriter sw = File.AppendText(textBox1.Text))
+                            {
+                                sw.WriteLine(FinalPassword);
+                                Debug.WriteLine("Пароль успешно добавлен в файл.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"Ошибка при добавлении пароля в файл: {ex.Message}");
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            File.CreateText(textBox1.Text);
+                            Debug.WriteLine("Файл успешно создан.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"Ошибка при создании файла: {ex.Message}");
+                        }
+                    }
+                }
+            }
         }
     }
 }
